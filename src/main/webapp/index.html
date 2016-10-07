@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Calendario</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function generaCalendario() {
+                var fechaActual = new Date();
+                var fechaActual2 = new Date();
+                fechaActual2.setDate(1);
+                var primerDiaSemana = fechaActual2.getDay();
+                var anyo = fechaActual.getFullYear();
+                var mes = fechaActual.getMonth();
+                var diasMes = 0;
+                if (mes == 0 || mes % 2 != 0) {
+                    diasMes = 31;
+                } else if (mes != 1) {
+                    diasMes = 30;
+                } else if ((anyo % 4 == 0) && (anyo % 100 == 0) || (anyo % 400 == 0)) {
+                    diasMes = 29;
+                } else {
+                    diasMes = 28;
+                }
+                var aux = 0;
+                var cont = 1;
+                var meses =["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+                var semana = ["L", "M", "X", "J", "V", "S", "D"];
+                var tabla = "<table border='1'>";
+                tabla += "<h1>"+meses[mes]+"</h1>";
+                for (i = 0; i < semana.length; i++) {
+                    tabla += "<th>" + semana[i] + "</th>";
+                }
+                for (i = 0; i < diasMes / 7; i++) {
+
+                    tabla += "<tr>";
+                    for (j = 0; j < semana.length; j++) {
+                    tabla += "<td>" ;
+                        aux++;
+                        if (aux >= primerDiaSemana && cont<=diasMes) {
+                            tabla+= cont;
+                            cont++;
+                        }
+                        tabla+="</td>";
+                    }
+                    tabla += "</tr>";
+                }
+
+                tabla += "</table>";
+                document.getElementById("resultado").innerHTML = tabla;
+            }
+        </script>   
+    </head>
+
+    <body>      
+        <div id="top">
+            <button onclick="generaCalendario()">Generar Calendario</button>
+        </div>
+        <br>
+        <div id="resultado"></div>
+    </body>
+</html>
