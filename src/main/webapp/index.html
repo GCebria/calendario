@@ -10,10 +10,10 @@
         <title>Calendario</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script>
-             
+             var fechaActual = new Date();
             function generaCalendario(fechaActual) {
                 if (isNaN(fechaActual)) {
-                   var fechaActual = new Date();
+                   fechaActual = new Date();
                 } 
                     
                     var fechaActual2 = fechaActual;
@@ -55,14 +55,14 @@
                         }
                         tabla += "</tr>";
                     }
-                    tabla += "</table> <button onclick=nextMonth()>Anterior</button><button onclick=prevMonth()>Siguiente</button>\n\
+                    tabla += "</table> <button onclick=prevMonth()>Anterior</button><button onclick=nextMonth()>Siguiente</button>\n\
                     "+fechaActual;
 
                     document.getElementById("resultado").innerHTML = tabla;
                     }  
             
             function nextMonth() {
-                var hoy = new Date();
+                
 
                 if (hoy.getMonth() >= 11) {
                     hoy = new Date((hoy.getFullYear() + 1), 00, 01);
@@ -72,8 +72,15 @@
                 generaCalendario(hoy);
             }
 
-            function prevMonth(Date) {
+            function prevMonth() {
+                
 
+                if (hoy.getMonth() >= 11) {
+                    hoy = new Date((hoy.getFullYear() - 1), 00, 01);
+                } else {
+                    hoy = new Date(hoy.getFullYear(), (hoy.getMonth() - 1), 01);
+                }
+                generaCalendario(hoy);
             }
 
 
