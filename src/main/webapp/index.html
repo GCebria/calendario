@@ -5,11 +5,12 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script>
             var fechaActual = new Date();
-            function generaCalendario(fechaActual) {
+            
+            function generaCalendario(auxMes, auxAnyo) {
                 /*Tratar fecha*/
-                if (isNaN(fechaActual)) {
-                    fechaActual = new Date();
-                }
+                
+                fechaActual = new Date();
+                
                 var fechaActual2 = fechaActual;
                 fechaActual2.setDate(1);
                 var primerDiaSemana = fechaActual2.getDay();
@@ -52,16 +53,42 @@
                     }
                     tabla += "</tr>";
                 }
-                tabla += "</table> <button onclick=prevMonth()>Anterior</button><button onclick=nextMonth()>Siguiente</button>\n\
+                tabla += "</table>";
+                
+                /*tratamiento de mes mas y mes menos*/
+                tabla +="<button onclick=(mesMas(" + mes + ", "+anyo+"))>Anterior</button><button onclick=nextMonth(mesMenos("+mes+", "+anyo+"))>Siguiente</button>\n\
                     <br>" + fechaActual;
+                function mesMas(mes, anyo){
+                    
+                if (mes = 12){
+                    anyo++;
+                    mes =0;
+                    generaCalendario(mes, anyo);
+                }
+                else {
+                    
+                    mes++;
+                    generaCalendario(mes, anyo);
+                }
+                function mesMenos(mes, anyo){
+                if (mes = 0){
+                    anyo--;
+                    mes=12;
+                    generaCalendario(mes, anyo);
+                }
+                else {
+                    mes--;
+                
+                    generaCalendario(mes, anyo);
+                }
 
                 /*Pasar el calendario*/
                 document.getElementById("resultado").innerHTML = tabla;
+                
             }
-
-            function nextMonth() {
-
-                var hoy = new Date();
+/*
+            function nextMonth() {            
+                
                 if (hoy.getMonth() >= 11) {
                     hoy = new Date((hoy.getFullYear() + 1), 00, 01);
                 } else {
@@ -80,15 +107,13 @@
                 }
                 generaCalendario(hoy);
             }
-
+*/
         </script>   
     </head>
 
     <body>      
-
         <div id="top" align="center">
             <button onclick="generaCalendario()">Generar Calendario</button>
-
         </div>
         <br>
         <div id="resultado" align="center"></div>
